@@ -1,12 +1,21 @@
-FINCRIME COMMAND V21
-- FATF fixed High-Risk/Call-for-Action list with flags.
-- FATF Grey List with flags.
-- FATF terminology: no formal 'prohibited list'; DPRK/Iran countermeasures, Myanmar EDD.
-- Reuters latest 10 relevant items with Arabic summaries.
-- Trusted secondary news.
-- IQTFS latest 10.
-- USD/IQD parallel market and CBI official rate.
-- Red pulsing country news dots on the globe.
-- GitHub Actions refresh scheduled every 12 hours.
+# FINCRIME COMMAND v21 — LIVE
 
-IMPORTANT: upload the hidden `.github` folder too. Scheduled jobs may start a little later than the exact cron time.
+v20.2 was a static prototype (demo data). v21 is live:
+
+- js/live.js       — live engine: 5 web-search jobs, 12h auto-sync, globe feed
+- api/claude.js    — Vercel serverless proxy (REQUIRED for live data)
+- FATF latest (all jurisdictions), Reuters/wires top-10 with Arabic,
+  IQTFS Iraq sanctions top-10, USD/IQD official vs parallel, FATF
+  black/grey lists with flags — all clickable, all with real source URLs.
+
+## Deploy (Vercel required — GitHub Pages CANNOT run the api/ folder)
+1. Push everything (index.html, css/, js/, api/) to the GitHub repo.
+2. Vercel → project → Settings → Environment Variables:
+   ANTHROPIC_API_KEY = sk-ant-...     (required)
+   ACCESS_CODE       = team password  (optional; users asked once/session)
+3. Every git commit redeploys automatically on the same URL.
+
+## Update cycle
+Data auto-refreshes every 12 hours per browser (localStorage cache).
+SYNC NOW button forces a fresh sync. The chip in the header shows
+last-sync age and time to next sync.
