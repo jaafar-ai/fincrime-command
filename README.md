@@ -1,18 +1,21 @@
-# FINCRIME COMMAND V8 — WorldMonitor-style prototype
+# FINCRIME COMMAND V10 — IQTFS Integration Prototype
 
-Highlights
-- Map-first layout.
-- Full interactive globe with pan, zoom and rotation.
-- Layer toggles for FATF/FSRB, sanctions, AML/CFT, cybercrime, fraud, banking, Egmont/FIU and FATCA.
-- URL state for lat, lon, zoom, timeRange and layers.
-- Copy View URL button.
-- Live intelligence feed.
-- Bottom intelligence tabs for overview, FATF, sanctions, Reuters and timeline.
-- Arabic summary modal.
-- Reuters 5-item rotating event queue.
-- GitHub Pages compatible static structure.
+Adds a permanent priority source for IQTFS / Iraq AML-CFT Office:
+- Dedicated IQTFS layer.
+- Dedicated IQTFS regional/source filter.
+- Permanent Iraq Sanctions Watch card.
+- Sample local sanctions/freezing event.
+- Sample international / UN sanctions event.
+- IQTFS added to source-health panel.
+- IQTFS added to timeline filter.
+- Default view keeps IQTFS enabled.
 
-Important
-- Intelligence content is demo/sample content.
-- Reuters video remains a licensed integration placeholder.
-- A production live system needs a backend/database and authorized source collectors.
+Production design:
+The live collector should monitor the official Iraqi AML/CFT Office / IQTFS sanctions platform for:
+- local Iraqi sanctions/designations
+- freezing decisions and related notices
+- appeals / removals / amendments where published
+- international and UN-related sanctions material made available through the Iraqi platform
+- change detection between current and previous list versions
+
+This prototype still uses sample records; it does not yet scrape or automatically ingest the live site.
