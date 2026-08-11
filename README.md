@@ -1,19 +1,16 @@
-# FINCRIME COMMAND V20
+# FINCRIME COMMAND — Country News Dots Update
 
-This is the first frontend/backend project split.
+New map behavior:
+- Every country with visible intelligence gets a red dot.
+- The dot represents the latest visible event for that country.
+- Red pulse ring animates around the point.
+- Existing red country alert highlighting remains available.
+- Hover over a red point to preview the latest event.
+- Click the point/news card to move the globe to the related country.
+- Layer and search filters automatically control which country dots remain visible.
 
-## frontend/
-Latest WorldMonitor-style operations-center prototype.
-For GitHub Pages, upload the CONTENTS of this folder to the repository root.
-
-## backend/
-FastAPI starter for the real live platform.
-GitHub Pages cannot run this backend; later host it on a server platform.
-
-### Endpoints
-- GET /health
-- GET /events
-- GET /sources
-
-## Next production work
-Database + live collectors + list-change detection + AI summaries/translations + authentication.
+Upload these files to the same GitHub repository:
+- index.html
+- css/
+- js/
+- README.md
