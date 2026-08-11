@@ -300,3 +300,12 @@ button{cursor:pointer}
 .fatf-badge{font-size:9px;font-weight:700;letter-spacing:.08em;padding:2px 7px;border-radius:3px;vertical-align:middle;white-space:nowrap}
 .fatf-badge.b{color:#ff4453;border:1px solid rgba(255,68,83,.6);background:rgba(255,68,83,.12)}
 .fatf-badge.g{color:#ffb454;border:1px solid rgba(255,180,84,.55);background:rgba(255,180,84,.1)}
+
+/* ===== v21.4: direct source links everywhere ===== */
+.mini-item{position:relative}
+.mini-src{display:inline-block;margin-top:5px;font-size:8.5px;font-weight:700;letter-spacing:.1em;color:#5e9bd6;text-decoration:none;border:1px solid rgba(94,155,214,.45);border-radius:3px;padding:2px 7px}
+.mini-src:hover{color:#8db9e8;border-color:#8db9e8}
+.feed-src{float:right;font-size:8.5px;font-weight:700;letter-spacing:.08em;color:#5e9bd6;text-decoration:none;border:1px solid rgba(94,155,214,.45);border-radius:3px;padding:1px 6px;margin-left:6px}
+.feed-src:hover{color:#8db9e8;border-color:#8db9e8}
+.video-src{color:#5e9bd6;text-decoration:none;font-weight:600}
+.video-src:hover{color:#8db9e8}

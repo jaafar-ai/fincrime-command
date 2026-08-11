@@ -63,7 +63,7 @@
   }
 
   /* ---------------- prompts ---------------- */
-  var ITEM_RULES = '\nRules:\n- Only items actually found via web search from the named sources. NEVER invent an item, date, or URL.\n- Each item must carry the real source URL you found.\n- "summary": 2 short factual English sentences (analyst tone).\n- "summary_ar": faithful formal Arabic translation of the summary (فصحى مهنية).\n- "country": short English country name; "countryKey": the country name exactly as used in Natural Earth world GeoJSON (e.g. "United States of America", "Iran", "Russia", "United Kingdom", "Iraq"); use null for global items.\n- "iso2": ISO 3166-1 alpha-2 code of the country (e.g. "IQ", "IR"), null for global items.\n- "lat"/"lng": approximate coordinates of the concerned country/city (numbers), null if global.\n- "priority": "Critical" (list changes, designations, major fines), "High" (binding guidance, enforcement), "Medium" (reports, events).\nRespond ONLY with a JSON array, no fences, no preamble:\n[{"title":"...","source":"FATF","date":"YYYY-MM-DD","url":"https://...","summary":"...","summary_ar":"...","country":"Iran","countryKey":"Iran","iso2":"IR","lat":32.4,"lng":53.6,"priority":"High"}]';
+  var ITEM_RULES = '\nRules:\n- Only items actually found via web search from the named sources. NEVER invent an item, date, or URL.\n- Each item must carry the real source URL you found.\n- "summary": 2 short factual English sentences (analyst tone).\n- "summary_ar": faithful formal Arabic translation of the summary (فصحى مهنية).\n- "country": short English country name; "countryKey": the country name exactly as used in Natural Earth world GeoJSON (e.g. "United States of America", "Iran", "Russia", "United Kingdom", "Iraq"); use null for global items.\n- "iso2": ISO 3166-1 alpha-2 code of the country (e.g. "IQ", "IR"), null for global items.\n- "lat"/"lng": approximate coordinates of the concerned country/city (numbers), null if global.\n- "priority": "Critical" (list changes, designations, major fines), "High" (binding guidance, enforcement), "Medium" (reports, events).\n- "domain": one of "fatf","sanctions","aml","cyber","iqtfs" — the domain this item belongs to.\nRespond ONLY with a JSON array, no fences, no preamble:\n[{"title":"...","source":"FATF","date":"YYYY-MM-DD","url":"https://...","summary":"...","summary_ar":"...","country":"Iran","countryKey":"Iran","iso2":"IR","lat":32.4,"lng":53.6,"priority":"High"}]';
 
   function pFATF() {
     return "You are the intelligence desk of an AML/CFT operations room. Use web search NOW for the LATEST official FATF and FATF-style regional body (MENAFATF, MONEYVAL, APG, CFATF, GIABA, EAG, ESAAMLG, GAFILAT) news covering ALL countries: plenary outcomes, black/grey list changes, mutual evaluation reports, follow-up reports, new standards and guidance. Sources: fatf-gafi.org and official FSRB sites only. Max 8 items, most recent first." + ITEM_RULES;
@@ -78,7 +78,7 @@
     return 'Use web search NOW to find the CURRENT USD/IQD exchange rates in Iraq:\n1) The OFFICIAL Central Bank of Iraq rate (cbi.iq).\n2) The PARALLEL (black) market rate in Baghdad today — from Iraqi financial news sites or currency trackers.\nRespond ONLY with JSON, no fences:\n{"official": 1310, "parallel": 1520, "as_of": "YYYY-MM-DD", "note": "one short English line on the trend", "note_ar": "same line in Arabic", "src_official": "https://...", "src_parallel": "https://..."}\nNumbers = IQD per 1 USD. Only report rates you actually found; never guess.';
   }
   function pLists() {
-    return 'Use web search NOW to find the CURRENT official FATF lists on fatf-gafi.org:\n1) "High-Risk Jurisdictions subject to a Call for Action" (black list).\n2) "Jurisdictions under Increased Monitoring" (grey list).\nRespond ONLY with JSON, no fences:\n{"as_of":"Month YYYY","black":[{"name":"Iran","iso2":"IR","geo":"Iran"}],"grey":[{"name":"Algeria","iso2":"DZ","geo":"Algeria"}]}\n"geo" = the country name exactly as in Natural Earth world GeoJSON. Be exact and complete per the latest FATF statement.';
+    return 'Use web search NOW to find the CURRENT official FATF lists on fatf-gafi.org:\n1) "High-Risk Jurisdictions subject to a Call for Action" (black list).\n2) "Jurisdictions under Increased Monitoring" (grey list).\nRespond ONLY with JSON, no fences:\n{"as_of":"Month YYYY","src_black":"https://...","src_grey":"https://...","black":[{"name":"Iran","iso2":"IR","geo":"Iran"}],"grey":[{"name":"Algeria","iso2":"DZ","geo":"Algeria"}]}\n"src_black"/"src_grey" = the URLs of the two official FATF statements you found.\n"geo" = the country name exactly as in Natural Earth world GeoJSON. Be exact and complete per the latest FATF statement.';
   }
 
   /* ---------------- normalize + apply ---------------- */
@@ -94,7 +94,7 @@
         countryKey: it.countryKey || null,
         coord: (lat !== null && lng !== null) ? [lng, lat] : [0, 0],
         hasGeo: lat !== null && lng !== null,
-        layer: layer,
+        layer: (["fatf","sanctions","aml","cyber","iqtfs"].indexOf(it.domain) >= 0) ? it.domain : layer,
         source: String(it.source || "—"),
         body: String(it.source || "—"),
         date: String(it.date || ""),
@@ -115,8 +115,12 @@
     el.innerHTML = items.map(function (x) {
       return '<div class="mini-item" data-fid="' + x.id + '">' +
         '<div class="mini-meta"><span class="pr pr-' + x.priority + '">' + x.priority + '</span>' + (x.iso2 ? '<span class="mini-flag">' + flagEmoji(x.iso2) + '</span>' : '') + '<b>' + esc(x.source) + '</b><span>' + esc(x.date) + '</span></div>' +
-        '<div class="mini-title">' + esc(x.title) + '</div></div>';
+        '<div class="mini-title">' + esc(x.title) + '</div>' +
+        '<a class="mini-src" href="' + esc(x.url) + '" target="_blank" rel="noopener" title="Open source">SOURCE ↗</a></div>';
     }).join("");
+    el.querySelectorAll(".mini-src").forEach(function (a) {
+      a.addEventListener("click", function (e) { e.stopPropagation(); });
+    });
     el.querySelectorAll(".mini-item").forEach(function (n) {
       n.addEventListener("click", function () {
         var id = Number(n.dataset.fid);
@@ -160,7 +164,11 @@
     }
     el.innerHTML =
       '<div class="lists-block"><small class="lb-black">■ BLACK LIST — CALL FOR ACTION (' + ls.black.length + ')</small><div class="flag-row">' + chips(ls.black, "black") + '</div></div>' +
-      '<div class="lists-block"><small class="lb-grey">■ GREY LIST — INCREASED MONITORING (' + (ls.grey || []).length + ')</small><div class="flag-row">' + chips(ls.grey, "grey") + '</div></div>';
+      '<div class="lists-block"><small class="lb-grey">■ GREY LIST — INCREASED MONITORING (' + (ls.grey || []).length + ')</small><div class="flag-row">' + chips(ls.grey, "grey") + '</div></div>' +
+      '<div class="fx-links">' +
+      '<a href="' + esc(ls.src_black || "https://www.fatf-gafi.org/en/topics/high-risk-and-other-monitored-jurisdictions.html") + '" target="_blank" rel="noopener">FATF Black List ↗</a>' +
+      '<a href="' + esc(ls.src_grey || "https://www.fatf-gafi.org/en/topics/high-risk-and-other-monitored-jurisdictions.html") + '" target="_blank" rel="noopener">FATF Grey List ↗</a>' +
+      '</div>';
   }
 
   function applyAll(res) {
@@ -207,7 +215,7 @@
       return j.run().then(function (v) { res[j.out] = v; cacheSet(j.key, v); })
         .catch(function () { var old = null; try { old = JSON.parse(localStorage.getItem(j.key)); } catch (e) {} res[j.out] = old ? old.v : null; });
     });
-    Promise.all(tasks).then(function () {
+    return Promise.all(tasks).then(function () {
       applyAll(res);
       syncing = false;
       updateSyncLabel();
@@ -237,13 +245,75 @@
     } catch (e) {}
   }, 130);
 
+
+  /* ---------------- RANGE SEARCH (24h / 7d / 30d / 90d / 1y) ---------------- */
+  var RANGE_TXT = { "24h": "the last 24 hours", "7d": "the last 7 days", "30d": "the last 30 days", "90d": "the last 90 days", "1y": "the last 12 months" };
+
+  function pRange(r) {
+    return "You are the intelligence desk of an AML/CFT operations room. Use web search NOW for news published strictly within " + RANGE_TXT[r] + " across ALL of these domains and ALL countries: FATF and FATF-style regional bodies (list changes, evaluations, standards); official sanctions (OFAC, UN, EU, UK) designations and removals; AML/CFT regulators, FIUs, bank fines and enforcement; cybercrime and fraud with financial impact; and Iraqi IQTFS / aml.iq sanctions and freezing decisions. Sources: official bodies and trusted press (Reuters, AP, Bloomberg, FT). Max 12 items, newest first. Every item MUST have been published within " + RANGE_TXT[r] + " — verify the publication date." + ITEM_RULES;
+  }
+  function applyRange(items, label) {
+    window.INTEL.length = 0;
+    items.forEach(function (x) { window.INTEL.push(x); });
+    var t = items.map(function (x) { return "[" + x.source + "] " + x.title; });
+    if (t.length) window.TICKER_ITEMS = t;
+    var fm = $("feedMode"); if (fm) fm.textContent = label;
+    if (typeof refreshMap === "function") { try { refreshMap(); } catch (e) {} }
+  }
+  function syncRange(r) {
+    if (r === "live") { syncAll(false); var fm = $("feedMode"); if (fm) fm.textContent = "Global"; return; }
+    var key = "fm_range_" + r;
+    var hit = cacheGet(key);
+    if (hit) { applyRange(normItems(hit.v, "aml", 5000), r.toUpperCase() + " WINDOW"); return; }
+    setSync("SEARCHING " + r.toUpperCase() + "…", true);
+    callClaude(pRange(r), true).then(extractJson).then(function (arr) {
+      cacheSet(key, arr);
+      applyRange(normItems(arr, "aml", 5000), r.toUpperCase() + " WINDOW");
+      setSync("LIVE", false); updateSyncLabel();
+    }).catch(function () { setSync("RANGE SEARCH FAILED — RETRY", false); });
+  }
+  var trSel = $("timeRange");
+  if (trSel) trSel.addEventListener("change", function () { syncRange(trSel.value); });
+
+  /* ---------------- PER-COUNTRY DEEP SEARCH ---------------- */
+  function pCountry(country, r) {
+    return "You are the intelligence desk of an AML/CFT operations room. Use web search NOW for the latest news about " + country + " strictly related to: money laundering, terrorist financing, FATF/FSRB status, sanctions and designations, central bank and regulator actions, bank compliance fines, financial crime, fraud and cybercrime. Only items published within " + (RANGE_TXT[r] || RANGE_TXT["30d"]) + ". Sources: official bodies and trusted press. Max 8 items, newest first. Set country to \"" + country + "\" on every item." + ITEM_RULES;
+  }
+  function countryDeepSearch() {
+    if (typeof selectedCountry === "undefined" || !selectedCountry) return;
+    var country = selectedCountry;
+    var r = (trSel && trSel.value !== "live") ? trSel.value : "30d";
+    var key = "fm_ctry_" + country.replace(/\W+/g, "_") + "_" + r;
+    var feedEl = $("countryFeed");
+    function merge(arr) {
+      var items = normItems(arr, "aml", 6000 + Math.floor(Math.random() * 1000));
+      var urls = {};
+      window.INTEL.forEach(function (x) { urls[x.url] = 1; });
+      items.forEach(function (x) { if (!urls[x.url]) window.INTEL.push(x); });
+      if (typeof selectCountry === "function") selectCountry(country, false);
+      if (typeof refreshMap === "function") { try { refreshMap(); } catch (e) {} }
+    }
+    var hit = cacheGet(key);
+    if (hit) { merge(hit.v); return; }
+    if (feedEl) feedEl.innerHTML = '<div class="mini-loading">Searching ' + esc(country) + ' — ' + (RANGE_TXT[r] || r) + '…</div>';
+    callClaude(pCountry(country, r), true).then(extractJson).then(function (arr) {
+      cacheSet(key, arr); merge(arr);
+    }).catch(function () {
+      if (feedEl) feedEl.innerHTML = '<div class="mini-loading">Country search failed — try again.</div>';
+    });
+  }
+  var deepBtn = $("countryDeep");
+  if (deepBtn) deepBtn.addEventListener("click", countryDeepSearch);
+
   /* ---------------- boot ---------------- */
   var btn = $("syncNow");
   if (btn) btn.addEventListener("click", function () { syncAll(true); });
 
   // First load: use 12h cache if fresh, otherwise fetch. Map may still be loading;
   // refreshMap() guards internally, and app.js re-reads INTEL on map load.
-  syncAll(false);
+  syncAll(false).then(function () {
+    if (trSel && trSel.value && trSel.value !== "live") syncRange(trSel.value);
+  });
 
   // Watchdog: every 30 min, if the cache is older than 12h, resync automatically.
   setInterval(function () {

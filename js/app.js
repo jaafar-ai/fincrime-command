@@ -7,7 +7,7 @@ function fatfStatus(country){const Ls=window.FATF_LISTS;if(!Ls)return null;if((L
 const params=new URLSearchParams(location.search);
 const startLat=parseFloat(params.get("lat")||22),startLon=parseFloat(params.get("lon")||20),startZoom=parseFloat(params.get("zoom")||1.45);
 const initialLayers=(params.get("layers")||"fatf,sanctions,aml,cyber,iqtfs").split(",");
-const timeRange=params.get("timeRange")||"7d";
+const timeRange=params.get("timeRange")||"live";
 let selectedCountry=params.get("country")||null;
 let sourceFilter=null;
 let currentPopup=null;
@@ -143,7 +143,7 @@ document.getElementById("resetMap").addEventListener("click",()=>{selectedCountr
 document.getElementById("globeMode").addEventListener("click",()=>{try{map.setProjection({type:"globe"})}catch(e){};document.getElementById("globeMode").classList.add("active");document.getElementById("flatMode").classList.remove("active")});
 document.getElementById("flatMode").addEventListener("click",()=>{try{map.setProjection({type:"mercator"})}catch(e){};document.getElementById("flatMode").classList.add("active");document.getElementById("globeMode").classList.remove("active")});
 
-function card(x){return `<article class="feed-card" data-id="${x.id}"><span class="tag">${x.layer.toUpperCase()} • ${x.priority}</span><h3>${x.title}</h3><p>${x.summary}</p><div class="feed-meta">${flagFor(x.country,[x])} ${x.country} • ${x.source} • ${x.date}</div></article>`}
+function card(x){return `<article class="feed-card" data-id="${x.id}"><span class="tag">${x.layer.toUpperCase()} • ${x.priority}</span><h3>${x.title}</h3><p>${x.summary}</p><div class="feed-meta">${flagFor(x.country,[x])} ${x.country} • ${x.source} • ${x.date}<a class="feed-src" href="${x.url}" target="_blank" rel="noopener">SOURCE ↗</a></div></article>`}
 
 
 window.TICKER_ITEMS = [
@@ -172,6 +172,7 @@ function renderAll(){
   document.getElementById("visibleCount").textContent=rows.length;
   document.getElementById("feedMode").textContent=selectedCountry||sourceFilter||"Global";
   document.getElementById("feed").innerHTML=rows.map(card).join("")||'<div style="padding:12px;color:#7f8c9e;font-size:10px">No matching intelligence.</div>';
+  document.querySelectorAll(".feed-src").forEach(a=>a.addEventListener("click",e=>e.stopPropagation()));
   document.querySelectorAll(".feed-card").forEach(c=>c.addEventListener("click",()=>focusEvent(Number(c.dataset.id),false)));
   renderTimeline();
   updateAlertCount();
@@ -194,7 +195,8 @@ function selectCountry(country,fly=true){
   document.getElementById("countrySummary").textContent=`Country intelligence view for ${country}. This profile aggregates AML/CFT, sanctions, FIU, banking, fraud, cybercrime, tax and enforcement intelligence where available.`;
   const feedEl=document.getElementById("countryFeed");
   if(feedEl){
-    feedEl.innerHTML=rows.map(x=>`<div class="mini-item" data-cid="${x.id}"><div class="mini-meta"><span class="pr pr-${x.priority}">${x.priority}</span><span class="mini-flag">${flagFor(x.country,[x])}</span><b>${x.source}</b><span>${x.date}</span></div><div class="mini-title">${x.title}</div></div>`).join("")||'<div class="mini-loading">No events for this country in the current sync.</div>';
+    feedEl.innerHTML=rows.map(x=>`<div class="mini-item" data-cid="${x.id}"><div class="mini-meta"><span class="pr pr-${x.priority}">${x.priority}</span><span class="mini-flag">${flagFor(x.country,[x])}</span><b>${x.source}</b><span>${x.date}</span></div><div class="mini-title">${x.title}</div><a class="mini-src" href="${x.url}" target="_blank" rel="noopener">SOURCE ↗</a></div>`).join("")||'<div class="mini-loading">No events for this country in the current sync.</div>';
+    feedEl.querySelectorAll(".mini-src").forEach(a=>a.addEventListener("click",e=>e.stopPropagation()));
     feedEl.querySelectorAll(".mini-item").forEach(n=>n.addEventListener("click",()=>{
       const it=intel.find(i=>i.id===Number(n.dataset.cid));
       if(it)openModal(it);
@@ -268,7 +270,10 @@ document.querySelectorAll(".tab").forEach(b=>b.addEventListener("click",()=>{
 function renderTimeline(){
   const q=(document.getElementById("keyword").value||"").toLowerCase(),from=document.getElementById("from").value,to=document.getElementById("to").value,layer=document.getElementById("timelineLayer").value;
   const rows=intel.filter(x=>(!selectedCountry||x.country===selectedCountry)&&(!q||(`${x.title} ${x.country} ${x.source}`).toLowerCase().includes(q))&&(!from||x.date>=from)&&(!to||x.date<=to)&&(!layer||x.layer===layer));
-  document.getElementById("timelineResults").innerHTML=rows.map(card).join("");
+  const box=document.getElementById("timelineResults");
+  box.innerHTML=rows.map(card).join("");
+  box.querySelectorAll(".feed-src").forEach(a=>a.addEventListener("click",e=>e.stopPropagation()));
+  box.querySelectorAll(".feed-card").forEach(c=>c.addEventListener("click",()=>focusEvent(Number(c.dataset.id),false)));
 }
 ["keyword","from","to","timelineLayer"].forEach(id=>document.getElementById(id).addEventListener("input",renderTimeline));
 

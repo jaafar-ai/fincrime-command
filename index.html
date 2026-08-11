@@ -22,8 +22,9 @@
 
     <div class="top-actions">
       <select id="timeRange" title="Time range">
+        <option value="live" selected>LIVE</option>
         <option value="24h">24H</option>
-        <option value="7d" selected>7D</option>
+        <option value="7d">7D</option>
         <option value="30d">30D</option>
         <option value="90d">90D</option>
         <option value="1y">1Y</option>
@@ -122,6 +123,7 @@
       <div class="country-summary" id="countrySummary">Select a jurisdiction to view its AML/CFT, sanctions, FIU, banking, fraud and cyber intelligence.</div>
       <div class="country-feed" id="countryFeed"></div>
       <div class="country-actions">
+        <button id="countryDeep">⌕ Range News Search</button>
         <button id="countryAll">All Events</button>
         <button id="countryTimeline">Open Timeline</button>
       </div>
@@ -156,18 +158,7 @@
         <div id="fatfListsBody" class="lists-body"><div class="mini-loading">Waiting for first sync…</div></div>
       </article>
 
-      <article class="always-card reuters-live-card">
-        <div class="always-head"><div><small>REUTERS — LIVE VIDEO</small><h3>Latest Reuters Videos</h3></div><span>OFFICIAL YOUTUBE</span></div>
-        <div class="reuters-frame">
-          <iframe
-            src="https://www.youtube.com/embed/videoseries?list=UUhqUTb7kYRX8-EiaN3XFrSQ&autoplay=1&mute=1&rel=0"
-            title="Reuters latest videos"
-            loading="lazy"
-            allow="autoplay; encrypted-media; picture-in-picture"
-            allowfullscreen></iframe>
-        </div>
-        <p class="video-note">Official Reuters YouTube uploads playlist; advances automatically.</p>
-      </article>
+      
 
       <article class="always-card timeline-card-static">
         <div class="always-head"><div><small>SEARCH & TIMELINE</small><h3>Historical Intelligence</h3></div><span>ARCHIVE</span></div>
@@ -184,6 +175,19 @@
           </select>
         </div>
         <div id="timelineResults" class="timeline-results compact-results"></div>
+      </article>
+
+      <article class="always-card reuters-live-card">
+        <div class="always-head"><div><small>REUTERS — LIVE VIDEO</small><h3>Latest Reuters Videos</h3></div><span>OFFICIAL YOUTUBE</span></div>
+        <div class="reuters-frame">
+          <iframe
+            src="https://www.youtube.com/embed/videoseries?list=UUhqUTb7kYRX8-EiaN3XFrSQ&autoplay=1&mute=1&rel=0"
+            title="Reuters latest videos"
+            loading="lazy"
+            allow="autoplay; encrypted-media; picture-in-picture"
+            allowfullscreen></iframe>
+        </div>
+        <p class="video-note">Official Reuters YouTube uploads playlist; advances automatically. <a class="video-src" href="https://www.youtube.com/channel/UChqUTb7kYRX8-EiaN3XFrSQ" target="_blank" rel="noopener">Open Reuters on YouTube ↗</a></p>
       </article>
 
     </div>
