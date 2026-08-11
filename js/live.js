@@ -22,6 +22,7 @@
     keys.forEach(function (k) { try { var o = JSON.parse(localStorage.getItem(k)); if (o && o.t < min) min = o.t; } catch (e) {} });
     return min === Infinity ? 0 : min;
   }
+  window.flagEmoji = flagEmoji;
   function flagEmoji(iso2) {
     if (!iso2 || iso2.length !== 2) return "🏳";
     var A = 0x1F1E6;
@@ -62,7 +63,7 @@
   }
 
   /* ---------------- prompts ---------------- */
-  var ITEM_RULES = '\nRules:\n- Only items actually found via web search from the named sources. NEVER invent an item, date, or URL.\n- Each item must carry the real source URL you found.\n- "summary": 2 short factual English sentences (analyst tone).\n- "summary_ar": faithful formal Arabic translation of the summary (فصحى مهنية).\n- "country": short English country name; "countryKey": the country name exactly as used in Natural Earth world GeoJSON (e.g. "United States of America", "Iran", "Russia", "United Kingdom", "Iraq"); use null for global items.\n- "lat"/"lng": approximate coordinates of the concerned country/city (numbers), null if global.\n- "priority": "Critical" (list changes, designations, major fines), "High" (binding guidance, enforcement), "Medium" (reports, events).\nRespond ONLY with a JSON array, no fences, no preamble:\n[{"title":"...","source":"FATF","date":"YYYY-MM-DD","url":"https://...","summary":"...","summary_ar":"...","country":"Iran","countryKey":"Iran","lat":32.4,"lng":53.6,"priority":"High"}]';
+  var ITEM_RULES = '\nRules:\n- Only items actually found via web search from the named sources. NEVER invent an item, date, or URL.\n- Each item must carry the real source URL you found.\n- "summary": 2 short factual English sentences (analyst tone).\n- "summary_ar": faithful formal Arabic translation of the summary (فصحى مهنية).\n- "country": short English country name; "countryKey": the country name exactly as used in Natural Earth world GeoJSON (e.g. "United States of America", "Iran", "Russia", "United Kingdom", "Iraq"); use null for global items.\n- "iso2": ISO 3166-1 alpha-2 code of the country (e.g. "IQ", "IR"), null for global items.\n- "lat"/"lng": approximate coordinates of the concerned country/city (numbers), null if global.\n- "priority": "Critical" (list changes, designations, major fines), "High" (binding guidance, enforcement), "Medium" (reports, events).\nRespond ONLY with a JSON array, no fences, no preamble:\n[{"title":"...","source":"FATF","date":"YYYY-MM-DD","url":"https://...","summary":"...","summary_ar":"...","country":"Iran","countryKey":"Iran","iso2":"IR","lat":32.4,"lng":53.6,"priority":"High"}]';
 
   function pFATF() {
     return "You are the intelligence desk of an AML/CFT operations room. Use web search NOW for the LATEST official FATF and FATF-style regional body (MENAFATF, MONEYVAL, APG, CFATF, GIABA, EAG, ESAAMLG, GAFILAT) news covering ALL countries: plenary outcomes, black/grey list changes, mutual evaluation reports, follow-up reports, new standards and guidance. Sources: fatf-gafi.org and official FSRB sites only. Max 8 items, most recent first." + ITEM_RULES;
@@ -89,6 +90,7 @@
       return {
         id: baseId + i,
         country: it.country || "Global",
+        iso2: (it.iso2 && String(it.iso2).length === 2) ? String(it.iso2).toUpperCase() : null,
         countryKey: it.countryKey || null,
         coord: (lat !== null && lng !== null) ? [lng, lat] : [0, 0],
         hasGeo: lat !== null && lng !== null,
@@ -112,7 +114,7 @@
     if (!items.length) { el.innerHTML = '<div class="mini-loading">No verified items in this sync.</div>'; return; }
     el.innerHTML = items.map(function (x) {
       return '<div class="mini-item" data-fid="' + x.id + '">' +
-        '<div class="mini-meta"><span class="pr pr-' + x.priority + '">' + x.priority + '</span><b>' + esc(x.source) + '</b><span>' + esc(x.date) + '</span></div>' +
+        '<div class="mini-meta"><span class="pr pr-' + x.priority + '">' + x.priority + '</span>' + (x.iso2 ? '<span class="mini-flag">' + flagEmoji(x.iso2) + '</span>' : '') + '<b>' + esc(x.source) + '</b><span>' + esc(x.date) + '</span></div>' +
         '<div class="mini-title">' + esc(x.title) + '</div></div>';
     }).join("");
     el.querySelectorAll(".mini-item").forEach(function (n) {
@@ -150,6 +152,7 @@
     if (!el) return;
     if (!ls || !Array.isArray(ls.black)) { el.innerHTML = '<div class="mini-loading">List sync failed — press SYNC NOW.</div>'; return; }
     var asOf = $("listsAsOf"); if (asOf) asOf.textContent = (ls.as_of || "").toUpperCase();
+    window.FATF_LISTS = ls;
     function chips(a, cls) {
       return (a || []).map(function (c) {
         return '<span class="flag-chip ' + cls + '">' + flagEmoji(c.iso2) + ' ' + esc(c.name) + '</span>';

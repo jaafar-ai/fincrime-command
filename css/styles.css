@@ -288,3 +288,15 @@ button{cursor:pointer}
 .flag-chip{font-size:10.5px;padding:3px 8px;border-radius:12px;background:#0e1524;border:1px solid #1c2740;color:#dbe4f4;white-space:nowrap}
 .flag-chip.black{border-color:rgba(255,68,83,.55)}
 .flag-chip.grey{border-color:rgba(255,180,84,.5)}
+
+/* ===== v21.1: country news list in drawer ===== */
+.country-feed{margin-top:10px;display:flex;flex-direction:column;gap:6px;max-height:230px;overflow-y:auto;padding-right:2px}
+.country-feed::-webkit-scrollbar{width:5px}
+.country-feed::-webkit-scrollbar-thumb{background:#2a3a5c;border-radius:3px}
+
+/* ===== v21.2: flags + FATF status badges ===== */
+.ctry-flag{font-size:20px;margin-right:2px}
+.mini-flag{font-size:12px}
+.fatf-badge{font-size:9px;font-weight:700;letter-spacing:.08em;padding:2px 7px;border-radius:3px;vertical-align:middle;white-space:nowrap}
+.fatf-badge.b{color:#ff4453;border:1px solid rgba(255,68,83,.6);background:rgba(255,68,83,.12)}
+.fatf-badge.g{color:#ffb454;border:1px solid rgba(255,180,84,.55);background:rgba(255,180,84,.1)}

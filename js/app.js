@@ -1,4 +1,9 @@
 const intel=window.INTEL,reuters=window.REUTERS,fixedBriefs=window.FIXED_BRIEFS,links=window.CROSS_BORDER;
+const ISO2_FALLBACK={"Iraq":"IQ","Iran":"IR","North Korea":"KP","Myanmar":"MM","Syria":"SY","Yemen":"YE","Lebanon":"LB","Russia":"RU","United States":"US","United Kingdom":"GB","Turkey":"TR","Turkiye":"TR","United Arab Emirates":"AE","Saudi Arabia":"SA","Qatar":"QA","Kuwait":"KW","Bahrain":"BH","Oman":"OM","Jordan":"JO","Egypt":"EG","Algeria":"DZ","Morocco":"MA","Tunisia":"TN","Libya":"LY","Sudan":"SD","South Sudan":"SS","Nigeria":"NG","South Africa":"ZA","Kenya":"KE","Angola":"AO","Mozambique":"MZ","Namibia":"NA","Cameroon":"CM","Ivory Coast":"CI","Cote d'Ivoire":"CI","Burkina Faso":"BF","DR Congo":"CD","Democratic Republic of the Congo":"CD","China":"CN","India":"IN","Pakistan":"PK","Afghanistan":"AF","Vietnam":"VN","Laos":"LA","Nepal":"NP","Philippines":"PH","Indonesia":"ID","Malaysia":"MY","Singapore":"SG","Japan":"JP","South Korea":"KR","Germany":"DE","France":"FR","Italy":"IT","Spain":"ES","Netherlands":"NL","Switzerland":"CH","Austria":"AT","Belgium":"BE","Bulgaria":"BG","Monaco":"MC","Malta":"MT","Cyprus":"CY","Ukraine":"UA","Venezuela":"VE","Bolivia":"BO","Haiti":"HT","Mexico":"MX","Brazil":"BR","Argentina":"AR","Colombia":"CO","Panama":"PA","Cayman Islands":"KY","Bahamas":"BS","The Bahamas":"BS","British Virgin Islands":"VG","Canada":"CA","Australia":"AU","Global":null};
+function listIso(country){const Ls=window.FATF_LISTS;if(!Ls)return null;const all=[...(Ls.black||[]),...(Ls.grey||[])];const m=all.find(c=>c.name===country||c.geo===country);return m?m.iso2:null}
+function flagFor(country,rows){const iso=(rows&&rows[0]&&rows[0].iso2)||ISO2_FALLBACK[country]||listIso(country);return (iso&&window.flagEmoji)?window.flagEmoji(iso):""}
+function fatfStatus(country){const Ls=window.FATF_LISTS;if(!Ls)return null;if((Ls.black||[]).some(c=>c.name===country||c.geo===country))return"BLACK";if((Ls.grey||[]).some(c=>c.name===country||c.geo===country))return"GREY";return null}
+
 const params=new URLSearchParams(location.search);
 const startLat=parseFloat(params.get("lat")||22),startLon=parseFloat(params.get("lon")||20),startZoom=parseFloat(params.get("zoom")||1.45);
 const initialLayers=(params.get("layers")||"fatf,sanctions,aml,cyber,iqtfs").split(",");
@@ -138,7 +143,7 @@ document.getElementById("resetMap").addEventListener("click",()=>{selectedCountr
 document.getElementById("globeMode").addEventListener("click",()=>{try{map.setProjection({type:"globe"})}catch(e){};document.getElementById("globeMode").classList.add("active");document.getElementById("flatMode").classList.remove("active")});
 document.getElementById("flatMode").addEventListener("click",()=>{try{map.setProjection({type:"mercator"})}catch(e){};document.getElementById("flatMode").classList.add("active");document.getElementById("globeMode").classList.remove("active")});
 
-function card(x){return `<article class="feed-card" data-id="${x.id}"><span class="tag">${x.layer.toUpperCase()} • ${x.priority}</span><h3>${x.title}</h3><p>${x.summary}</p><div class="feed-meta">${x.country} • ${x.source} • ${x.date}</div></article>`}
+function card(x){return `<article class="feed-card" data-id="${x.id}"><span class="tag">${x.layer.toUpperCase()} • ${x.priority}</span><h3>${x.title}</h3><p>${x.summary}</p><div class="feed-meta">${flagFor(x.country,[x])} ${x.country} • ${x.source} • ${x.date}</div></article>`}
 
 
 window.TICKER_ITEMS = [
@@ -177,13 +182,24 @@ function selectCountry(country,fly=true){
   const rows=intel.filter(x=>x.country===country);
   const first=rows[0];
   if(fly&&first)map.flyTo({center:first.coord,zoom:4,duration:1200});
-  document.getElementById("countryTitle").textContent=country;
+  const st=fatfStatus(country);
+  document.getElementById("countryTitle").innerHTML=
+    `<span class="ctry-flag">${flagFor(country,rows)}</span> ${country}`+
+    (st==="BLACK"?' <span class="fatf-badge b">FATF BLACK LIST</span>':st==="GREY"?' <span class="fatf-badge g">FATF GREY LIST</span>':"");
   document.getElementById("countryStats").innerHTML=`
     <div><b>${rows.length}</b><span>EVENTS</span></div>
     <div><b>${new Set(rows.map(x=>x.layer)).size}</b><span>DOMAINS</span></div>
     <div><b>${new Set(rows.map(x=>x.source)).size}</b><span>SOURCES</span></div>`;
   document.getElementById("countryTags").innerHTML=[...new Set(rows.map(x=>x.body))].map(x=>`<span class="country-tag">${x}</span>`).join("");
   document.getElementById("countrySummary").textContent=`Country intelligence view for ${country}. This profile aggregates AML/CFT, sanctions, FIU, banking, fraud, cybercrime, tax and enforcement intelligence where available.`;
+  const feedEl=document.getElementById("countryFeed");
+  if(feedEl){
+    feedEl.innerHTML=rows.map(x=>`<div class="mini-item" data-cid="${x.id}"><div class="mini-meta"><span class="pr pr-${x.priority}">${x.priority}</span><span class="mini-flag">${flagFor(x.country,[x])}</span><b>${x.source}</b><span>${x.date}</span></div><div class="mini-title">${x.title}</div></div>`).join("")||'<div class="mini-loading">No events for this country in the current sync.</div>';
+    feedEl.querySelectorAll(".mini-item").forEach(n=>n.addEventListener("click",()=>{
+      const it=intel.find(i=>i.id===Number(n.dataset.cid));
+      if(it)openModal(it);
+    }));
+  }
   document.getElementById("countryDrawer").classList.add("open");
   document.getElementById("mapHeadline").textContent=country+" Intelligence";
   document.getElementById("mapSubline").textContent=rows.length+" indexed events";
@@ -201,13 +217,21 @@ function focusEvent(id,fromMap=false){
   selectCountry(x.country,false);
   map.flyTo({center:x.coord,zoom:Math.max(4,map.getZoom()),duration:1300});
   if(currentPopup)currentPopup.remove();
-  currentPopup=new maplibregl.Popup({offset:12}).setLngLat(x.coord).setHTML(`<b>${x.country}</b><br>${x.title}<br><small>${x.source} • ${x.date}</small>`).addTo(map);
-  openModal(x);
+  const n=intel.filter(i=>i.country===x.country).length;
+  currentPopup=new maplibregl.Popup({offset:12}).setLngLat(x.coord)
+    .setHTML(`<b>${flagFor(x.country,[x])} ${x.country}</b><br>${n} event${n===1?"":"s"} — full list in the Country Intelligence panel`)
+    .addTo(map);
+  if(fromMap){
+    // Map click: show the country's news list in the drawer instead of one modal
+    document.getElementById("countryDrawer").scrollTop=0;
+  } else {
+    openModal(x);
+  }
 }
 
 function openModal(x){
   window.currentItem=x;
-  document.getElementById("modalMeta").textContent=`${x.country} • ${x.source} • ${x.date}`;
+  document.getElementById("modalMeta").textContent=`${flagFor(x.country,[x])} ${x.country} • ${x.source} • ${x.date}`;
   document.getElementById("modalTags").innerHTML=[x.layer,x.body,x.priority].map(t=>`<span>${t}</span>`).join("");
   document.getElementById("modalTitle").textContent=x.title;
   document.getElementById("modalEnglish").textContent=x.brief;
