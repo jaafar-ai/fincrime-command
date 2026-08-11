@@ -1,15 +1,12 @@
-# FINCRIME COMMAND V20.2 — Layout + Reuters Fix
+FINCRIME COMMAND V21
+- FATF fixed High-Risk/Call-for-Action list with flags.
+- FATF Grey List with flags.
+- FATF terminology: no formal 'prohibited list'; DPRK/Iran countermeasures, Myanmar EDD.
+- Reuters latest 10 relevant items with Arabic summaries.
+- Trusted secondary news.
+- IQTFS latest 10.
+- USD/IQD parallel market and CBI official rate.
+- Red pulsing country news dots on the globe.
+- GitHub Actions refresh scheduled every 12 hours.
 
-Changes:
-- Map text overlays cleaned up so labels no longer sit across the globe.
-- Country Intelligence panel is hidden until a country/event is selected.
-- Bottom tab interface removed.
-- FATF, Sanctions, AML/CFT, IQTFS, Source Monitor, Alert Center, Timeline and Reuters are now always-visible independent cards.
-- Reuters video now uses the verified Reuters YouTube channel uploads playlist and plays inside the site.
-- YouTube automatically advances through the Reuters uploads playlist as videos finish.
-
-Important:
-The Reuters player is the public official Reuters YouTube feed, not Reuters Connect licensed financial-crime-only video. Filtering specifically to the latest five AML/FinCrime Reuters videos will require a live backend/API or licensed Reuters integration.
-
-GitHub update:
-Upload index.html, css/, js/, README.md to the same repository and commit.
+IMPORTANT: upload the hidden `.github` folder too. Scheduled jobs may start a little later than the exact cron time.

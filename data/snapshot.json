@@ -1,0 +1,279 @@
+{
+  "updated_at": "2026-08-11T14:44:00+03:00",
+  "fatf": {
+    "published": "2026-06-19",
+    "high_risk": [
+      {
+        "name": "DPRK",
+        "flag": "🇰🇵",
+        "status": "COUNTERMEASURES"
+      },
+      {
+        "name": "Iran",
+        "flag": "🇮🇷",
+        "status": "COUNTERMEASURES"
+      },
+      {
+        "name": "Myanmar",
+        "flag": "🇲🇲",
+        "status": "ENHANCED DUE DILIGENCE"
+      }
+    ],
+    "grey_list": [
+      {
+        "name": "Angola",
+        "flag": "🇦🇴"
+      },
+      {
+        "name": "Bolivia",
+        "flag": "🇧🇴"
+      },
+      {
+        "name": "Bosnia and Herzegovina",
+        "flag": "🇧🇦"
+      },
+      {
+        "name": "Bulgaria",
+        "flag": "🇧🇬"
+      },
+      {
+        "name": "Cameroon",
+        "flag": "🇨🇲"
+      },
+      {
+        "name": "Côte d'Ivoire",
+        "flag": "🇨🇮"
+      },
+      {
+        "name": "Democratic Republic of the Congo",
+        "flag": "🇨🇩"
+      },
+      {
+        "name": "Haiti",
+        "flag": "🇭🇹"
+      },
+      {
+        "name": "Iraq",
+        "flag": "🇮🇶"
+      },
+      {
+        "name": "Kenya",
+        "flag": "🇰🇪"
+      },
+      {
+        "name": "Kuwait",
+        "flag": "🇰🇼"
+      },
+      {
+        "name": "Lao PDR",
+        "flag": "🇱🇦"
+      },
+      {
+        "name": "Lebanon",
+        "flag": "🇱🇧"
+      },
+      {
+        "name": "Monaco",
+        "flag": "🇲🇨"
+      },
+      {
+        "name": "Nepal",
+        "flag": "🇳🇵"
+      },
+      {
+        "name": "Papua New Guinea",
+        "flag": "🇵🇬"
+      },
+      {
+        "name": "South Sudan",
+        "flag": "🇸🇸"
+      },
+      {
+        "name": "Syria",
+        "flag": "🇸🇾"
+      },
+      {
+        "name": "Venezuela",
+        "flag": "🇻🇪"
+      },
+      {
+        "name": "Vietnam",
+        "flag": "🇻🇳"
+      },
+      {
+        "name": "Virgin Islands (UK)",
+        "flag": "🇻🇬"
+      },
+      {
+        "name": "Yemen",
+        "flag": "🇾🇪"
+      }
+    ]
+  },
+  "reuters": [
+    {
+      "title": "Lebanon indicts ex-central bank governor Salameh over new alleged financial crimes",
+      "country": "Lebanon",
+      "date": "2026-08-10",
+      "url": "https://www.reuters.com/legal/government/lebanon-indicts-ex-central-bank-governor-salameh-over-new-alleged-financial-2026-08-10/",
+      "summary": "New financial-crime charges widened scrutiny of alleged embezzlement, illicit enrichment and offshore structures.",
+      "ar": "اتهامات جديدة بجرائم مالية وسّعت التحقيقات في مزاعم اختلاس وإثراء غير مشروع وهياكل أوفشور."
+    },
+    {
+      "title": "US sanctions Dubai crypto exchange for aiding Iran's IRGC",
+      "country": "United Arab Emirates",
+      "date": "2026-08-07",
+      "url": "https://www.reuters.com/world/middle-east/us-sanctions-dubai-crypto-exchange-aiding-irans-irgc-following-reuters-report-2026-08-07/",
+      "summary": "The U.S. sanctioned Dubai-based Shelbit and related parties over alleged dealings benefiting Iran-linked sanctioned networks.",
+      "ar": "فرضت الولايات المتحدة عقوبات على منصة Shelbit في دبي وأطراف مرتبطة بها بسبب معاملات مزعومة لصالح شبكات إيرانية خاضعة للعقوبات."
+    },
+    {
+      "title": "US Senator urges regulators to probe Wall Street banks over Epstein accounts",
+      "country": "United States",
+      "date": "2026-08-04",
+      "url": "https://www.reuters.com/legal/government/us-senator-wyden-urges-regulators-probe-wall-street-banks-over-epstein-accounts-2026-08-04/",
+      "summary": "A U.S. senator asked regulators to examine whether major banks met AML reporting obligations.",
+      "ar": "طالب عضو في مجلس الشيوخ الأميركي الجهات الرقابية بالتحقق من التزام مصارف كبرى بمتطلبات مكافحة غسل الأموال والإبلاغ."
+    },
+    {
+      "title": "UBS fined $125 million by US regulators for money laundering violations",
+      "country": "Switzerland",
+      "date": "2026-08-03",
+      "url": "https://www.reuters.com/world/us-treasury-fines-ubs-financial-services-125-million-secrecy-violations-2026-08-03/",
+      "summary": "UBS Financial Services was fined for repeated AML-program and suspicious-activity reporting failures.",
+      "ar": "غرّمت الجهات الأميركية UBS بسبب إخفاقات متكررة في برنامج مكافحة غسل الأموال والإبلاغ عن الأنشطة المشبوهة."
+    },
+    {
+      "title": "US Treasury AML chief to join Citi as global head of sanctions",
+      "country": "United States",
+      "date": "2026-07-31",
+      "url": "https://www.reuters.com/business/finance/us-treasury-anti-money-laundering-chief-gacki-join-citi-global-head-sanctions-2026-07-31/",
+      "summary": "FinCEN director Andrea Gacki is leaving Treasury to become Citigroup's global head of sanctions.",
+      "ar": "تغادر مديرة FinCEN أندريا غاكي الخزانة الأميركية لتتولى منصب الرئيس العالمي للعقوبات في Citigroup."
+    },
+    {
+      "title": "Illicit Iranian gambling network helped pull off a $4 billion sanctions dodge",
+      "country": "United Arab Emirates",
+      "date": "2026-07-31",
+      "url": "https://www.reuters.com/investigations/illicit-iranian-gambling-network-helped-pull-off-4-billion-sanctions-dodge-2026-07-31/",
+      "summary": "A Reuters investigation described a multibillion-dollar sanctions-evasion network using crypto and gambling-linked flows.",
+      "ar": "كشف تحقيق لرويترز شبكة بمليارات الدولارات للتهرب من العقوبات باستخدام العملات الرقمية وتدفقات مرتبطة بالمقامرة."
+    },
+    {
+      "title": "Swiss court fines Lombard Odier in Uzbek money laundering case",
+      "country": "Switzerland",
+      "date": "2026-07-27",
+      "url": "https://www.reuters.com/sitemap/2026-07/27/1/",
+      "summary": "A Swiss court fined Lombard Odier for failing to prevent money laundering in an Uzbekistan-linked case.",
+      "ar": "غرّمت محكمة سويسرية مصرف Lombard Odier بسبب الإخفاق في منع غسل الأموال في قضية مرتبطة بأوزبكستان."
+    },
+    {
+      "title": "Israeli banks prepare to cut ties with Palestinian counterparts over AML/TF concerns",
+      "country": "Palestine",
+      "date": "2026-07-23",
+      "url": "https://www.reuters.com/world/middle-east/concerns-palestinian-economic-crisis-grow-israeli-banks-prepare-cut-ties-2026-07-23/",
+      "summary": "Israeli banks prepared to end relationships with Palestinian banks citing AML/TF risks.",
+      "ar": "استعدت مصارف إسرائيلية لإنهاء علاقاتها مع مصارف فلسطينية بسبب مخاطر مرتبطة بغسل الأموال وتمويل الإرهاب."
+    },
+    {
+      "title": "Organised crime groups move billions through crypto, FATF warns",
+      "country": "France",
+      "date": "2026-07-16",
+      "url": "https://www.reuters.com/legal/government/organised-crime-groups-move-billions-through-crypto-global-financial-crime-2026-07-16/",
+      "summary": "FATF warned that organised crime groups exploit virtual assets and regulatory gaps to launder illicit funds.",
+      "ar": "حذرت FATF من استغلال جماعات الجريمة المنظمة للأصول الافتراضية والثغرات التنظيمية لغسل الأموال غير المشروعة."
+    },
+    {
+      "title": "Brazil charges 22 with laundering $20 million for gangs",
+      "country": "Brazil",
+      "date": "2026-07-15",
+      "url": "https://www.reuters.com/legal/government/twenty-two-charged-brazil-with-money-laundering-crime-gangs-2026-07-15/",
+      "summary": "Brazilian prosecutors charged 22 people over an alleged laundering network serving criminal gangs.",
+      "ar": "اتهم الادعاء البرازيلي 22 شخصاً بإدارة شبكة مزعومة لغسل الأموال لصالح عصابات إجرامية."
+    }
+  ],
+  "trusted": [
+    {
+      "title": "MFS collapse prompts UK watchdog to crack down on financial crime",
+      "source": "Financial Times",
+      "country": "United Kingdom",
+      "date": "2026-08-07",
+      "url": "https://www.ft.com/content/0edbd013-dc35-494b-b7e7-9a745af01c9d",
+      "summary": "The FCA is increasing scrutiny of firms with AML obligations after a major lender collapse."
+    },
+    {
+      "title": "Mid-Year Developments in Anti-Money Laundering in 2026",
+      "source": "Gibson Dunn",
+      "country": "United States",
+      "date": "2026-07-20",
+      "url": "https://www.gibsondunn.com/mid-year-developments-in-anti-money-laundering-in-2026/",
+      "summary": "A legal review of major AML regulation and enforcement developments in 2026."
+    }
+  ],
+  "iqtfs": [
+    {
+      "title": "Local sanctions list — IQTFS",
+      "date": "2026-08-11",
+      "url": "https://aml.iq/sanctions/local",
+      "summary": "Official Iraqi local sanctions and freezing records."
+    },
+    {
+      "title": "UN Security Council sanctions list — IQTFS",
+      "date": "2026-08-11",
+      "url": "https://aml.iq/sanctions/un",
+      "summary": "UN sanctions records available through the Iraqi sanctions platform."
+    },
+    {
+      "title": "سليمان كناش إبراهيم حمدي الزبيدي",
+      "date": "2026-08-11",
+      "url": "https://aml.iq/sanctions/local/88ebf56c-059f-11f1-848a-2a351fb4a28b",
+      "summary": "سجل ضمن قائمة العقوبات المحلية."
+    },
+    {
+      "title": "حسن خورشيد خليل سمين العزي",
+      "date": "2026-08-11",
+      "url": "https://aml.iq/sanctions/local/88ebf63d-059f-11f1-848a-2a351fb4a28b",
+      "summary": "سجل عقوبات محلي منشور."
+    },
+    {
+      "title": "امير زيدان ولي محمد الونداوي",
+      "date": "2026-08-11",
+      "url": "https://aml.iq/sanctions/local/88ebf5c8-059f-11f1-848a-2a351fb4a28b",
+      "summary": "سجل ضمن قائمة العقوبات المحلية."
+    },
+    {
+      "title": "رسول طلال قلندر قومندر القوشجي",
+      "date": "2026-08-11",
+      "url": "https://aml.iq/sanctions/local/88ebf6cf-059f-11f1-848a-2a351fb4a28b",
+      "summary": "سجل ضمن قائمة العقوبات المحلية."
+    },
+    {
+      "title": "جواد محمد هزاع سمير البياتي",
+      "date": "2026-08-11",
+      "url": "https://aml.iq/sanctions/local/88ebf61c-059f-11f1-848a-2a351fb4a28b",
+      "summary": "سجل عقوبات محلي منشور."
+    },
+    {
+      "title": "حيدر حسن عبد الله محمد الحمداني",
+      "date": "2026-08-11",
+      "url": "https://aml.iq/sanctions/local/88ebf676-059f-11f1-848a-2a351fb4a28b",
+      "summary": "سجل ضمن قائمة العقوبات المحلية."
+    },
+    {
+      "title": "Abdul Rahim Hamdan Dagalo — UN sanctions record",
+      "date": "2026-02-24",
+      "url": "https://aml.iq/sanctions/un/individual/08de744c-4f7e-413c-8ea1-9b0e50d5709d",
+      "summary": "UN individual sanctions record through IQTFS."
+    },
+    {
+      "title": "Tijani Ibrahim Moussa Mohamed — UN sanctions record",
+      "date": "2026-02-24",
+      "url": "https://aml.iq/sanctions/un/individual/08de744c-4f7e-44d4-8a64-996e27f192d8",
+      "summary": "UN individual sanctions record through IQTFS."
+    }
+  ],
+  "fx": {
+    "market100": 153700,
+    "official1": 1310
+  }
+}
