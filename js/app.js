@@ -192,7 +192,9 @@ function selectCountry(country,fly=true){
 
 document.getElementById("closeCountry").addEventListener("click",()=>{selectedCountry=null;document.getElementById("countryDrawer").classList.remove("open");document.getElementById("mapHeadline").textContent="Global Intelligence Watch";document.getElementById("mapSubline").textContent="Click a country or event";refreshMap()});
 document.getElementById("countryAll").addEventListener("click",()=>{selectedCountry=null;document.getElementById("countryDrawer").classList.remove("open");refreshMap()});
-document.getElementById("countryTimeline").addEventListener("click",()=>document.querySelector('[data-tab="timeline"]').click());
+document.getElementById("countryTimeline").addEventListener("click",()=>{
+  document.querySelector(".timeline-card-static")?.scrollIntoView({behavior:"smooth",block:"center"});
+});
 
 function focusEvent(id,fromMap=false){
   const x=intel.find(i=>i.id===id);if(!x)return;
@@ -232,9 +234,11 @@ document.getElementById("arabicBtn").addEventListener("click",()=>document.getEl
 document.getElementById("sourceBtn").addEventListener("click",()=>window.currentItem&&window.open(window.currentItem.url,"_blank"));
 
 document.querySelectorAll(".tab").forEach(b=>b.addEventListener("click",()=>{
+  const body=document.getElementById("tab-"+b.dataset.tab);
+  if(!body)return;
   document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));
   document.querySelectorAll(".tab-body").forEach(x=>x.classList.remove("active"));
-  b.classList.add("active");document.getElementById("tab-"+b.dataset.tab).classList.add("active");
+  b.classList.add("active");body.classList.add("active");
 }));
 
 function renderTimeline(){
@@ -244,21 +248,8 @@ function renderTimeline(){
 }
 ["keyword","from","to","timelineLayer"].forEach(id=>document.getElementById(id).addEventListener("input",renderTimeline));
 
-let ri=0,auto=true,elapsed=0;
-function renderReuters(){
-  const x=reuters[ri];
-  document.getElementById("videoTitle").textContent=x.title;
-  document.getElementById("videoMeta").textContent=`Reuters • ${x.topic}`;
-  document.getElementById("videoIndex").textContent=`${ri+1} / ${reuters.length}`;
-  document.getElementById("progress").style.width="0%";elapsed=0;
-  document.getElementById("queue").innerHTML=reuters.map((v,i)=>`<div class="queue-item ${i===ri?"active":""}" data-r="${i}">${i+1}. ${v.title}<br><small>${v.topic}</small></div>`).join("");
-  document.querySelectorAll("[data-r]").forEach(x=>x.addEventListener("click",()=>{ri=Number(x.dataset.r);renderReuters()}));
-}
-document.getElementById("next").addEventListener("click",()=>{ri=(ri+1)%reuters.length;renderReuters()});
-document.getElementById("prev").addEventListener("click",()=>{ri=(ri-1+reuters.length)%reuters.length;renderReuters()});
-document.getElementById("pause").addEventListener("click",e=>{auto=!auto;e.currentTarget.textContent=auto?"Pause Auto":"Resume Auto"});
-setInterval(()=>{if(!auto)return;elapsed++;document.getElementById("progress").style.width=(elapsed/18*100)+"%";if(elapsed>=18){ri=(ri+1)%reuters.length;renderReuters()}},1000);
-renderReuters();
+// Reuters video now uses the official Reuters YouTube uploads playlist embedded directly in the page.
+
 
 document.getElementById("autoFollow").addEventListener("change",e=>{
   if(!e.target.checked)return;

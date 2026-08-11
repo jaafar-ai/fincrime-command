@@ -31,7 +31,7 @@
       <button id="copyView">Copy View URL</button>
       <button id="resetMap">Reset Globe</button>
       <span class="alert-count" id="alertCount">3 ALERTS</span>
-      <span class="live">● LIVE PROTOTYPE</span>
+      <span class="live">● LIVE PROTOTYPE</span><div class="top-ticker"><span>LATEST</span><b id="tickerText">Monitoring FATF, sanctions, IQTFS, AML/CFT, FIUs and cybercrime...</b></div>
     </div>
   </header>
 
@@ -98,11 +98,12 @@
   <main class="map-wrap">
     <div id="map"></div>
 
-    <div class="map-top-left">
+    <div class="map-top-left compact-map-status">
       <div class="map-status">
         <span class="pulse-dot"></span>
-        <div><b id="mapHeadline">Global Intelligence Watch</b><small id="mapSubline">Click a country or event</small></div>
+        <div><b id="mapHeadline">Global Intelligence Watch</b><small id="mapSubline">Click a red point or country</small></div>
       </div>
+    </div>
     </div>
 
     <div class="map-top-right">
@@ -111,9 +112,7 @@
     </div>
 
     <div class="map-badge">PAN • ZOOM • ROTATE • CLICK COUNTRY • SHARE VIEW</div>
-    <div class="event-ticker" id="eventTicker"><span>LATEST</span><b id="tickerText">Monitoring FATF, sanctions, IQTFS, AML/CFT, FIUs and cybercrime...</b></div>
-
-    <div class="country-drawer" id="countryDrawer">
+<div class="country-drawer" id="countryDrawer">
       <div class="country-drawer-head">
         <div><small>COUNTRY INTELLIGENCE</small><h3 id="countryTitle">Global View</h3></div>
         <button id="closeCountry">×</button>
@@ -129,114 +128,86 @@
   </main>
 
   <section class="bottom-panel panel">
-    <div class="bottom-tabs">
-      <button class="tab active" data-tab="overview">Overview</button>
-      <button class="tab" data-tab="fatf">FATF</button>
-      <button class="tab" data-tab="sanctions">Sanctions</button>
-      <button class="tab" data-tab="aml">AML/CFT Watch</button>
-      <button class="tab" data-tab="reuters">Reuters</button>
-      <button class="tab" data-tab="timeline">Timeline</button>
-      <button class="tab" data-tab="sources">Source Monitor</button>
-      <button class="tab" data-tab="alerts">Alert Center</button>
-    </div>
+    <div class="always-grid">
 
-    <div class="tab-body active" id="tab-overview">
-      <div class="cards">
-        <article class="intel-tile" data-open-fixed="fatf">
-          <div class="tile-head"><small>FATF — LATEST</small><span>OFFICIAL</span></div>
-          <b>Jurisdiction & Standards Watch</b>
-          <p>Newest FATF / FSRB developments with country impact and operational explanation.</p>
-        </article>
-        <article class="intel-tile" data-open-fixed="sanctions">
-          <div class="tile-head"><small>SANCTIONS — LATEST</small><span>OFFICIAL LISTS</span></div>
-          <b>Designation & Screening Watch</b>
-          <p>Newest additions, amendments and removals from approved official lists.</p>
-        </article>
-        <article class="intel-tile" data-open-fixed="aml">
-          <div class="tile-head"><small>AML/CFT — GLOBAL WATCH</small><span>MULTI-SOURCE</span></div>
-          <b>Financial Crime Developments</b>
-          <p>Regulatory, FIU, enforcement, banking and typology intelligence in one brief.</p>
-        </article>
-        <article class="intel-tile iqtfs-tile" data-open-fixed="iqtfs">
-          <div class="tile-head"><small>IQTFS — IRAQ SANCTIONS</small><span>OFFICIAL IRAQ</span></div>
-          <b>Local & International Sanctions Watch</b>
-          <p>Permanent watch for Iraqi local sanctions, freezing decisions and international / UN-related sanctions updates published through the Iraqi AML/CFT Office platform.</p>
-        </article>
-        <article class="intel-tile" data-open-fixed="reuters">
-          <div class="tile-head"><small>REUTERS — WATCH</small><span>TRUSTED MEDIA</span></div>
-          <b>Financial Crime Coverage</b>
-          <p>Relevant reporting on banks, enforcement, sanctions, fraud and cybercrime.</p>
-        </article>
-      </div>
-    </div>
+      <article class="always-card intelligence-card" data-open-fixed="fatf">
+        <div class="always-head"><div><small>FATF — LATEST</small><h3>Jurisdiction & Standards Watch</h3></div><span>OFFICIAL</span></div>
+        <p>Newest FATF / FSRB developments, jurisdiction changes, mutual evaluations and standards updates.</p>
+        <div class="always-foot">Open for detailed brief + Arabic summary</div>
+      </article>
 
-    <div class="tab-body" id="tab-fatf">
-      <div class="longbrief two-col">
-        <div><h3>FATF Intelligence Brief</h3><p>Reserved for the newest FATF statement, plenary outcome, jurisdiction list change, mutual evaluation or standards update.</p></div>
-        <div class="mini-metrics"><div><b>FSRBs</b><span>9 regional bodies</span></div><div><b>Country Watch</b><span>Risk & follow-up</span></div><div><b>Change Detection</b><span>Added / removed / amended</span></div></div>
-      </div>
-    </div>
+      <article class="always-card intelligence-card" data-open-fixed="sanctions">
+        <div class="always-head"><div><small>SANCTIONS — LATEST</small><h3>Designation & Screening Watch</h3></div><span>OFFICIAL LISTS</span></div>
+        <p>OFAC, UN, EU, UK and other official additions, amendments and removals with screening impact.</p>
+        <div class="always-foot">Change detection & exposure review</div>
+      </article>
 
-    <div class="tab-body" id="tab-sanctions">
-      <div class="longbrief two-col">
-        <div><h3>Sanctions Intelligence Brief</h3><p>OFAC, UK, EU and other approved official sanctions-list changes with screening impact and jurisdiction links.</p></div>
-        <div class="mini-metrics"><div><b>Screening</b><span>Immediate review</span></div><div><b>List Diff</b><span>Add / amend / remove</span></div><div><b>Exposure</b><span>Customers / merchants / counterparties</span></div></div>
-      </div>
-    </div>
+      <article class="always-card intelligence-card" data-open-fixed="aml">
+        <div class="always-head"><div><small>AML/CFT — GLOBAL WATCH</small><h3>Financial Crime Developments</h3></div><span>MULTI-SOURCE</span></div>
+        <p>Regulators, FIUs, enforcement, banks, terrorist financing, virtual assets and emerging typologies.</p>
+        <div class="always-foot">Operational impact & recommended review</div>
+      </article>
 
-    <div class="tab-body" id="tab-aml">
-      <div class="longbrief two-col">
-        <div><h3>AML/CFT Global Watch</h3><p>Latest regulatory guidance, enforcement actions, FIU typologies, terrorist financing, proliferation financing, virtual asset and correspondent banking developments.</p></div>
-        <div class="mini-metrics"><div><b>AML</b><span>Money laundering</span></div><div><b>CFT</b><span>Terrorist financing</span></div><div><b>FinCrime</b><span>Fraud / cyber / sanctions</span></div></div>
-      </div>
-    </div>
+      <article class="always-card intelligence-card" data-open-fixed="iqtfs">
+        <div class="always-head"><div><small>IQTFS — IRAQ SANCTIONS</small><h3>Local & International Sanctions Watch</h3></div><span>OFFICIAL IRAQ</span></div>
+        <p>Iraqi local sanctions, freezing decisions and international / UN-related sanctions published through the Iraqi AML/CFT Office.</p>
+        <div class="always-foot">Priority Iraqi sanctions source</div>
+      </article>
 
-    <div class="tab-body" id="tab-reuters">
-      <div class="reuters-grid">
-        <div class="video">
-          <div class="video-inner">
-            <div class="video-overlay"><span>REUTERS CONNECT</span><small id="videoIndex">1 / 5</small></div>
-            <div><b id="videoTitle">Reuters Connect Video Slot</b><span id="videoMeta">Latest financial crime video/event</span></div>
-          </div>
-          <div class="progress"><span id="progress"></span></div>
-          <div class="controls"><button id="prev">Previous</button><button id="pause">Pause Auto</button><button id="next">Next</button></div>
+      <article class="always-card reuters-live-card">
+        <div class="always-head"><div><small>REUTERS — LIVE VIDEO</small><h3>Latest Reuters Videos</h3></div><span>OFFICIAL YOUTUBE</span></div>
+        <div class="reuters-frame">
+          <iframe
+            src="https://www.youtube.com/embed/videoseries?list=UUhqUTb7kYRX8-EiaN3XFrSQ&autoplay=1&mute=1&rel=0"
+            title="Reuters latest videos"
+            loading="lazy"
+            allow="autoplay; encrypted-media; picture-in-picture"
+            allowfullscreen></iframe>
         </div>
-        <div id="queue" class="queue"></div>
-      </div>
-    </div>
+        <p class="video-note">Plays Reuters' official YouTube uploads playlist. When one video ends, YouTube advances through the playlist automatically.</p>
+      </article>
 
-    <div class="tab-body" id="tab-timeline">
-      <div class="timeline-tools">
-        <input id="from" type="date">
-        <input id="to" type="date">
-        <input id="keyword" placeholder="Keyword / country / source">
-        <select id="timelineLayer"><option value="">All layers</option><option value="fatf">FATF/FSRB</option><option value="sanctions">Sanctions</option><option value="aml">AML/CFT</option><option value="cyber">Cybercrime</option><option value="banking">Banking</option><option value="iqtfs">IQTFS / Iraq Sanctions</option></select>
-      </div>
-      <div id="timelineResults" class="timeline-results"></div>
-    </div>
-  
-    <div class="tab-body" id="tab-sources">
-      <div class="source-monitor-grid">
-        <article class="source-monitor-card"><div><small>IRAQ</small><b>IQTFS / AML-CFT Office</b></div><span class="status-ok">PRIORITY</span><p>Local sanctions, freezing decisions, Iraq-facing international sanctions material.</p></article>
-        <article class="source-monitor-card"><div><small>GLOBAL</small><b>FATF</b></div><span class="status-ok">OFFICIAL</span><p>Plenaries, jurisdiction statements, standards, mutual evaluations and follow-up.</p></article>
-        <article class="source-monitor-card"><div><small>MENA</small><b>MENAFATF</b></div><span class="status-ok">OFFICIAL</span><p>Middle East & North Africa AML/CFT evaluations, follow-up and regional updates.</p></article>
-        <article class="source-monitor-card"><div><small>US</small><b>OFAC</b></div><span class="status-ok">OFFICIAL</span><p>Sanctions designations, amendments and removals.</p></article>
-        <article class="source-monitor-card"><div><small>UN</small><b>UN Security Council</b></div><span class="status-ok">OFFICIAL</span><p>UN sanctions and designation material relevant to screening and freezing.</p></article>
-        <article class="source-monitor-card"><div><small>EUROPE</small><b>EU / UK Sanctions</b></div><span class="status-ok">OFFICIAL</span><p>European and UK sanctions updates and designation changes.</p></article>
-        <article class="source-monitor-card"><div><small>FIU</small><b>Egmont Group</b></div><span class="status-ok">OFFICIAL</span><p>Public FIU cooperation, typologies and financial intelligence updates.</p></article>
-        <article class="source-monitor-card"><div><small>MEDIA</small><b>Reuters</b></div><span class="status-warn">LICENSE</span><p>Trusted-media coverage and licensed video integration.</p></article>
-      </div>
-    </div>
+      <article class="always-card source-card-static">
+        <div class="always-head"><div><small>SOURCE MONITOR</small><h3>Priority Sources</h3></div><span>STATUS</span></div>
+        <div class="source-mini-list">
+          <div><b>IQTFS</b><span class="ok">Priority</span></div>
+          <div><b>FATF</b><span class="ok">Official</span></div>
+          <div><b>MENAFATF</b><span class="ok">Official</span></div>
+          <div><b>OFAC / UN</b><span class="ok">Official</span></div>
+          <div><b>Reuters</b><span class="warn">Public Video</span></div>
+        </div>
+      </article>
 
-    <div class="tab-body" id="tab-alerts">
-      <div class="alert-center">
-        <div class="alert-rule critical"><span>CRITICAL</span><b>Sanctions List Change</b><p>Trigger when a new designation, amendment or removal is detected from an approved official sanctions source.</p></div>
-        <div class="alert-rule high"><span>HIGH</span><b>FATF / FSRB Country Status Change</b><p>Trigger when a jurisdiction is added, removed or materially updated in a FATF/FSRB statement.</p></div>
-        <div class="alert-rule high"><span>HIGH</span><b>IQTFS Local Sanctions / Freezing Update</b><p>Trigger when an Iraqi local designation, freezing decision or related official notice changes.</p></div>
-        <div class="alert-rule medium"><span>MEDIUM</span><b>New AML/CFT Regulatory Guidance</b><p>Trigger on new regulator or central-bank guidance that may affect operational controls.</p></div>
-      </div>
-    </div>
+      <article class="always-card alert-card-static">
+        <div class="always-head"><div><small>ALERT CENTER</small><h3>Priority Triggers</h3></div><span>LIVE RULES</span></div>
+        <div class="alert-mini-list">
+          <div><span class="critical-dot"></span><b>Sanctions List Change</b></div>
+          <div><span class="high-dot"></span><b>FATF / FSRB Country Change</b></div>
+          <div><span class="high-dot"></span><b>IQTFS Local Sanctions Update</b></div>
+          <div><span class="medium-dot"></span><b>AML/CFT Regulatory Guidance</b></div>
+        </div>
+      </article>
 
+      <article class="always-card timeline-card-static">
+        <div class="always-head"><div><small>SEARCH & TIMELINE</small><h3>Historical Intelligence</h3></div><span>ARCHIVE</span></div>
+        <div class="timeline-inline">
+          <input id="from" type="date">
+          <input id="to" type="date">
+          <input id="keyword" placeholder="Keyword / country / source">
+          <select id="timelineLayer">
+            <option value="">All layers</option>
+            <option value="fatf">FATF/FSRB</option>
+            <option value="sanctions">Sanctions</option>
+            <option value="aml">AML/CFT</option>
+            <option value="cyber">Cybercrime</option>
+            <option value="banking">Banking</option>
+            <option value="iqtfs">IQTFS / Iraq Sanctions</option>
+          </select>
+        </div>
+        <div id="timelineResults" class="timeline-results compact-results"></div>
+      </article>
+
+    </div>
   </section>
 </div>
 

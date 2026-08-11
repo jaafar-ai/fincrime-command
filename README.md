@@ -1,16 +1,15 @@
-# FINCRIME COMMAND — Country News Dots Update
+# FINCRIME COMMAND V20.2 — Layout + Reuters Fix
 
-New map behavior:
-- Every country with visible intelligence gets a red dot.
-- The dot represents the latest visible event for that country.
-- Red pulse ring animates around the point.
-- Existing red country alert highlighting remains available.
-- Hover over a red point to preview the latest event.
-- Click the point/news card to move the globe to the related country.
-- Layer and search filters automatically control which country dots remain visible.
+Changes:
+- Map text overlays cleaned up so labels no longer sit across the globe.
+- Country Intelligence panel is hidden until a country/event is selected.
+- Bottom tab interface removed.
+- FATF, Sanctions, AML/CFT, IQTFS, Source Monitor, Alert Center, Timeline and Reuters are now always-visible independent cards.
+- Reuters video now uses the verified Reuters YouTube channel uploads playlist and plays inside the site.
+- YouTube automatically advances through the Reuters uploads playlist as videos finish.
 
-Upload these files to the same GitHub repository:
-- index.html
-- css/
-- js/
-- README.md
+Important:
+The Reuters player is the public official Reuters YouTube feed, not Reuters Connect licensed financial-crime-only video. Filtering specifically to the latest five AML/FinCrime Reuters videos will require a live backend/API or licensed Reuters integration.
+
+GitHub update:
+Upload index.html, css/, js/, README.md to the same repository and commit.
