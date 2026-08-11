@@ -1,18 +1,19 @@
-# FINCRIME COMMAND V8 — WorldMonitor-style prototype
+# FINCRIME COMMAND V20
 
-Highlights
-- Map-first layout.
-- Full interactive globe with pan, zoom and rotation.
-- Layer toggles for FATF/FSRB, sanctions, AML/CFT, cybercrime, fraud, banking, Egmont/FIU and FATCA.
-- URL state for lat, lon, zoom, timeRange and layers.
-- Copy View URL button.
-- Live intelligence feed.
-- Bottom intelligence tabs for overview, FATF, sanctions, Reuters and timeline.
-- Arabic summary modal.
-- Reuters 5-item rotating event queue.
-- GitHub Pages compatible static structure.
+This is the first frontend/backend project split.
 
-Important
-- Intelligence content is demo/sample content.
-- Reuters video remains a licensed integration placeholder.
-- A production live system needs a backend/database and authorized source collectors.
+## frontend/
+Latest WorldMonitor-style operations-center prototype.
+For GitHub Pages, upload the CONTENTS of this folder to the repository root.
+
+## backend/
+FastAPI starter for the real live platform.
+GitHub Pages cannot run this backend; later host it on a server platform.
+
+### Endpoints
+- GET /health
+- GET /events
+- GET /sources
+
+## Next production work
+Database + live collectors + list-change detection + AI summaries/translations + authentication.
